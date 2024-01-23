@@ -1,0 +1,19 @@
+---
+version: "3"
+
+services:
+  btrtech-interview-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - BTRTECH_SERVER_URL=http://btrtech-interview-server:80
+    depends_on:
+      - btrtech-interview-server
+    command: ["100", "30"] # 100 messages, 30 seconds.
+  btrtech-interview-server:
+    image: "teampicnic/python-interview-server:0.1.0"
+    volumes:
+      - ./btrtech-assignment/mount-my-scenarios:/code/app/resources/mounted-scenarios
+    ports:
+      - "8000:80"
